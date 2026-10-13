@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Inventory Analytics Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1100px;
+      height: 600px;
+      background: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+    }
+
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .header-left h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .header-left p {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+    }
+    .pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+    }
+    .pill.active {
+      background: #4f46e5;
+      color: white;
+      border-color: #4f46e5;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .kpi-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .kpi-box .lbl {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+    .kpi-box .val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 4px 0;
+    }
+    .kpi-box .sub {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .main-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .table-container {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .table-bar {
+      padding: 10px 14px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .search-mock {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: #94a3b8;
+      width: 180px;
+    }
+    .table-head {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1fr 1.3fr 0.8fr;
+      padding: 8px 14px;
+      background: #f1f5f9;
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1fr 1.3fr 0.8fr;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #1e293b;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .tag {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+      width: fit-content;
+    }
+    .tag-budget { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .tag-standard { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .tag-premium { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .panel-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .formula-row {
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      color: #334155;
+    }
+    .formula-row strong {
+      color: #0f172a;
+    }
+    .fixture-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 11px;
+      color: #166534;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-header">
+    <div class="header-left">
+      <h2>Smart Product Inventory & Analytics System</h2>
+      <p>Real-time calculation engine with immutable estimates, multi-criteria filtering, and tiered categorization</p>
+    </div>
+    <div class="filter-pills">
+      <span class="pill active">All Items (18)</span>
+      <span class="pill">Budget (&lt;$50)</span>
+      <span class="pill">Standard ($50-$199)</span>
+      <span class="pill">Premium (≥$200)</span>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-box">
+      <div class="lbl">Total Inventory Value</div>
+      <div class="val" style="color: #4f46e5;">$4,580.00</div>
+      <div class="sub" style="color: #059669;">Computed via Array.reduce()</div>
+    </div>
+    <div class="kpi-box">
+      <div class="lbl">Catalog Count</div>
+      <div class="val">18 Products</div>
+      <div class="sub" style="color: #64748b;">3 Distinct Categories</div>
+    </div>
+    <div class="kpi-box">
+      <div class="lbl">Average Item Price</div>
+      <div class="val">$254.44</div>
+      <div class="sub" style="color: #64748b;">Across Active Stock</div>
+    </div>
+    <div class="kpi-box">
+      <div class="lbl">Affordable Ratio</div>
+      <div class="val" style="color: #059669;">77.8%</div>
+      <div class="sub" style="color: #059669;">14 Items Under $200</div>
+    </div>
+  </div>
+
+  <div class="main-body">
+    <div class="table-container">
+      <div class="table-bar">
+        <span>Active Catalog Roster</span>
+        <div class="search-mock">🔍 Search catalog...</div>
+      </div>
+      <div class="table-head">
+        <div>Product</div>
+        <div>Category</div>
+        <div>Price</div>
+        <div>Classification</div>
+        <div>Status</div>
+      </div>
+      <div class="table-row">
+        <div>Ergonomic Mouse</div>
+        <div>Accessories</div>
+        <div>$24.99</div>
+        <div><span class="tag tag-budget">Budget (&lt;$50)</span></div>
+        <div style="color: #059669; font-weight: 600;">In Stock</div>
+      </div>
+      <div class="table-row">
+        <div>Mechanical Keyboard</div>
+        <div>Peripherals</div>
+        <div>$129.50</div>
+        <div><span class="tag tag-standard">Standard</span></div>
+        <div style="color: #059669; font-weight: 600;">In Stock</div>
+      </div>
+      <div class="table-row">
+        <div>27" QHD Monitor</div>
+        <div>Displays</div>
+        <div>$329.00</div>
+        <div><span class="tag tag-premium">Premium (≥$200)</span></div>
+        <div style="color: #059669; font-weight: 600;">In Stock</div>
+      </div>
+      <div class="table-row">
+        <div>USB-C Multiport Hub</div>
+        <div>Cables & Adapters</div>
+        <div>$45.00</div>
+        <div><span class="tag tag-budget">Budget (&lt;$50)</span></div>
+        <div style="color: #059669; font-weight: 600;">In Stock</div>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="panel-card">
+        <div class="panel-title">Financial Forecast Estimator</div>
+        <div class="formula-row"><span>Estimated Tax (+8%):</span> <strong>+$366.40</strong></div>
+        <div class="formula-row"><span>Projected Discount (-10%):</span> <strong>-$458.00</strong></div>
+        <div class="formula-row" style="border-top: 1px solid #f1f5f9; margin-top: 6px; padding-top: 6px;">
+          <span>Net Projected Value:</span> <strong style="color: #4f46e5;">$4,488.40</strong>
+        </div>
+      </div>
+
+      <div class="fixture-box">
+        <strong>✓ Deterministic Fixture Match</strong><br>
+        Adds Monitor ($150) under Section 11 specifications and verifies identical totals without mutating state.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
