@@ -1,0 +1,18 @@
+{
+  "name": "javascript-learning-lab",
+  "version": "1.0.0",
+  "description": "JavaScript Practical Learning Lab & Smart Inventory Analytics System",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "node --test tests/assignments.test.js",
+    "start": "node -e \"console.log('Open index.html in your browser or run a static server.')\""
+  },
+  "keywords": [
+    "javascript",
+    "learning-lab",
+    "inventory",
+    "vanilla-js"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT"
+}

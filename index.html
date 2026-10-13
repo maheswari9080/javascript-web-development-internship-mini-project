@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JavaScript Practical Learning Lab & Smart Inventory Analytics System - An educational developer platform demonstrating core JavaScript concepts and capstone inventory analytics.">
+  <title>JavaScript Practical Learning Lab & Smart Inventory Analytics</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Mobile Top Navigation Bar -->
+    <header class="mobile-top-bar" id="mobile-top-bar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">JS</span>
+        <span>Learning Lab</span>
+      </div>
+      <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        ☰ Menu
+      </button>
+    </header>
+
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- Application Sidebar -->
+    <aside class="sidebar" id="app-sidebar" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <span class="brand-icon">JS</span>
+          <span>Learning Lab</span>
+        </div>
+      </div>
+
+      <nav aria-label="Sidebar Sections">
+        <div class="nav-section-title">Navigation</div>
+        <ul class="sidebar-nav">
+          <li class="nav-item">
+            <button class="nav-btn active" data-view="dashboard" id="nav-btn-dashboard">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">⌘</span>
+                <span>Dashboard</span>
+              </span>
+            </button>
+          </li>
+
+          <div class="nav-section-title">Core Assignments</div>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-1" id="nav-btn-a1">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">1</span>
+                <span>Variables & Types</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a1" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-2" id="nav-btn-a2">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">2</span>
+                <span>Operators & Input</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a2" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-3" id="nav-btn-a3">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">3</span>
+                <span>Conditionals</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a3" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-4" id="nav-btn-a4">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">4</span>
+                <span>Loops & Control</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a4" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-5" id="nav-btn-a5">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">5</span>
+                <span>Functions & Scope</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a5" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="assignment-6" id="nav-btn-a6">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">6</span>
+                <span>Array Methods</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-a6" title="Idle"></span>
+            </button>
+          </li>
+
+          <div class="nav-section-title">Capstone & Testing</div>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="capstone" id="nav-btn-capstone">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">★</span>
+                <span>Smart Inventory</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-capstone" title="Idle"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-view="test-center" id="nav-btn-test-center">
+              <span class="nav-btn-left">
+                <span class="nav-badge-num">✓</span>
+                <span>Test Center</span>
+              </span>
+              <span class="nav-status-dot" id="nav-dot-tests" title="Idle"></span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>Engine: Vanilla JS v2.0</span>
+        <span id="sidebar-progress-label">0 / 7 Done</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper" id="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title" id="top-bar-title">
+          <span>⌘</span>
+          <span id="current-view-name">Dashboard</span>
+        </div>
+        <div class="top-bar-stats">
+          <span>Completed: <strong id="top-completed-count">0</strong> / 7</span>
+          <div class="progress-pill" id="top-progress-pill">0% Complete</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+
+        <!-- ==================== VIEW: DASHBOARD ==================== -->
+        <section class="view-section active" id="view-dashboard" aria-labelledby="heading-dashboard">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-dashboard">JavaScript Learning Lab Dashboard</h1>
+              <p class="section-description">
+                Interactive platform for mastering foundational JavaScript concepts and testing enterprise inventory analytics.
+              </p>
+            </div>
+          </div>
+
+          <!-- Top Metric Cards -->
+          <div class="grid-cols-4" style="margin-bottom: 24px;">
+            <div class="stat-card">
+              <div class="stat-label">ASSIGNMENTS PROGRESS</div>
+              <div class="stat-value" id="dash-stat-progress">0%</div>
+              <div class="stat-sub" id="dash-stat-completed-sub">0 of 7 Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">MATCHING OUTPUTS</div>
+              <div class="stat-value" id="dash-stat-matches">0 / 7</div>
+              <div class="stat-sub">Strict diff validation</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">INVENTORY PRODUCTS</div>
+              <div class="stat-value" id="dash-stat-products">2 Items</div>
+              <div class="stat-sub">Active Capstone catalog</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">TOTAL INVENTORY VALUE</div>
+              <div class="stat-value" id="dash-stat-value">$825</div>
+              <div class="stat-sub">Computed via reduce()</div>
+            </div>
+          </div>
+
+          <!-- Assignment Cards Grid -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Core Assignments Overview</span>
+              <button class="btn btn-secondary btn-sm" id="btn-run-all-assignments">Run All Examples</button>
+            </div>
+            <div class="grid-cols-3" id="dashboard-assignments-grid">
+              <!-- Dynamically rendered or static semantic cards -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 1 ==================== -->
+        <section class="view-section" id="view-assignment-1" aria-labelledby="heading-a1">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a1">Assignment 1: Variables & Data Types</h1>
+              <p class="section-description">
+                Demonstrates <code>var</code>, <code>let</code>, and <code>const</code>, primitive types, array reference type, <code>typeof</code> evaluation, and JSON serialization.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Specification & Code -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Code Implementation</span>
+                </div>
+                <pre class="code-panel"><code>var name = "Alice";
+let age = 25;
+const isEmployed = true;
+const skills = ["HTML", "CSS", "JavaScript"];
+
+// Output formulation using typeof and JSON.stringify:
+console.log(`Name: ${name} (Type: ${typeof name})`);
+console.log(`Age: ${age} (Type: ${typeof age})`);
+console.log(`IsEmployed: ${isEmployed} (Type: ${typeof isEmployed})`);
+console.log(`Skills: ${JSON.stringify(skills)} (Type: ${typeof skills})`);</code></pre>
+                <div style="margin-top: 16px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a1">Run Example</button>
+                    <button class="btn btn-secondary" id="btn-compare-a1">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a1">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Output Reference</span>
+                </div>
+                <pre class="code-panel"><code>Name: Alice (Type: string)
+Age: 25 (Type: number)
+IsEmployed: true (Type: boolean)
+Skills: ["HTML","CSS","JavaScript"] (Type: object)</code></pre>
+              </div>
+            </div>
+
+            <!-- Right: Actual Output & Diff -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a1">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a1">Click "Run Example" to execute Assignment 1.</pre>
+                <div id="diff-container-a1"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 2 ==================== -->
+        <section class="view-section" id="view-assignment-2" aria-labelledby="heading-a2">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a2">Assignment 2: Operators & Input Handling</h1>
+              <p class="section-description">
+                Interactive restaurant tip calculator. Converts values using <code>Number()</code>, validates positive numbers, applies arithmetic operators, and formats currency.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Interactive Inputs & Controls -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Input Parameters</span>
+                </div>
+                <div id="a2-error-alert" class="alert alert-error" style="display: none;"></div>
+
+                <div class="form-group">
+                  <label class="form-label" for="a2-subtotal-input">Bill Subtotal ($)</label>
+                  <input type="number" step="any" class="form-input" id="a2-subtotal-input" value="100" placeholder="e.g. 100">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="a2-tip-input">Tip Percentage (%)</label>
+                  <input type="number" step="any" class="form-input" id="a2-tip-input" value="15" placeholder="e.g. 15">
+                </div>
+
+                <div class="form-group">
+                  <span class="form-label">Deterministic Test Presets:</span>
+                  <div class="btn-group">
+                    <button class="preset-chip" id="a2-preset-demo">Demo ($100 / 15%)</button>
+                    <button class="preset-chip" id="a2-preset-decimal">$50.50 / 20%</button>
+                    <button class="preset-chip" id="a2-preset-neg">Invalid (-$25)</button>
+                    <button class="preset-chip" id="a2-preset-tip-overflow">Invalid Tip (150%)</button>
+                  </div>
+                </div>
+
+                <div style="margin-top: 18px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a2">Calculate Tip & Total</button>
+                    <button class="btn btn-secondary" id="btn-compare-a2">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a2">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Demo Output ($100, 15%)</span>
+                </div>
+                <pre class="code-panel"><code>Subtotal: $100
+Tip Percentage: 15%
+Calculated Tip: $15
+Total Amount to Pay: $115</code></pre>
+              </div>
+            </div>
+
+            <!-- Right: Actual Console Output -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a2">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a2">Click "Calculate Tip & Total" to run calculation.</pre>
+                <div id="diff-container-a2"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 3 ==================== -->
+        <section class="view-section" id="view-assignment-3" aria-labelledby="heading-a3">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a3">Assignment 3: Conditional Statements</h1>
+              <p class="section-description">
+                Validates student scores using <code>if...else</code>, selects letter grades via <code>switch</code>, and determines pass/fail status with a ternary operator.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Score Input & Preset Buttons -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Score Evaluation Input</span>
+                </div>
+                <div id="a3-error-alert" class="alert alert-error" style="display: none;"></div>
+
+                <div class="form-group">
+                  <label class="form-label" for="a3-score-input">Student Score (0–100)</label>
+                  <input type="number" class="form-input" id="a3-score-input" value="85" placeholder="e.g. 85">
+                </div>
+
+                <div class="form-group">
+                  <span class="form-label">Required Test Scores (Section 6):</span>
+                  <div class="btn-group">
+                    <button class="preset-chip" id="a3-preset-100">Score 100 (A)</button>
+                    <button class="preset-chip" id="a3-preset-85">Score 85 (B - Demo)</button>
+                    <button class="preset-chip" id="a3-preset-60">Score 60 (D)</button>
+                    <button class="preset-chip" id="a3-preset-40">Score 40 (F)</button>
+                    <button class="preset-chip" id="a3-preset-neg1">Score -1 (Invalid)</button>
+                    <button class="preset-chip" id="a3-preset-101">Score 101 (Invalid)</button>
+                  </div>
+                </div>
+
+                <div style="margin-top: 18px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a3">Evaluate Score</button>
+                    <button class="btn btn-secondary" id="btn-compare-a3">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a3">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Grading Rules Reference</span>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Score Range</th>
+                      <th>Letter Grade</th>
+                      <th>Status (Ternary)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>90 – 100</td><td><span class="category-badge premium">A</span></td><td>Passed</td></tr>
+                    <tr><td>80 – 89</td><td><span class="category-badge standard">B</span></td><td>Passed</td></tr>
+                    <tr><td>70 – 79</td><td><span class="category-badge standard">C</span></td><td>Passed</td></tr>
+                    <tr><td>60 – 69</td><td><span class="category-badge budget">D</span></td><td>Passed</td></tr>
+                    <tr><td>Below 60</td><td><span class="category-badge" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5;">F</span></td><td>Failed</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right: Actual Console Output -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a3">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a3">Click "Evaluate Score" to run grading logic.</pre>
+                <div id="diff-container-a3"></div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Demo Output (Score 85)</span>
+                </div>
+                <pre class="code-panel"><code>Score: 85
+Grade: B
+Status: Passed</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 4 ==================== -->
+        <section class="view-section" id="view-assignment-4" aria-labelledby="heading-a4">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a4">Assignment 4: Loops & Flow Control</h1>
+              <p class="section-description">
+                Three independent demonstrations: <code>for</code> loop multiplication table, <code>while</code> loop with <code>break</code> finding first number &gt; 10 divisible by 6, and <code>do...while</code> loop with <code>continue</code> skipping selected elements.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Implementation & Actions -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Loop Logic Implementation</span>
+                </div>
+                <pre class="code-panel"><code>// 1. For Loop: 5 Multiplication Table (1 to 5)
+for (let i = 1; i &lt;= 5; i++) {
+  console.log(`5 x ${i} = ${5 * i}`);
+}
+
+// 2. While Loop: First number > 10 divisible by 6 with break
+let num = 11;
+while (true) {
+  if (num % 6 === 0) {
+    console.log(`Found: ${num}`);
+    break;
+  }
+  num++;
+}
+
+// 3. Do...While Loop: Skip 3 using continue
+let count = 0;
+do {
+  count++;
+  if (count === 3) continue;
+  console.log(`Remaining Number: ${count}`);
+} while (count &lt; 5);</code></pre>
+
+                <div style="margin-top: 18px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a4">Run All Loops</button>
+                    <button class="btn btn-secondary" id="btn-compare-a4">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a4">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Output Reference</span>
+                </div>
+                <pre class="code-panel"><code>--- Multiplication Table of 5 ---
+5 x 1 = 5
+5 x 2 = 10
+5 x 3 = 15
+5 x 4 = 20
+5 x 5 = 25
+
+--- First number > 10 divisible by 6 ---
+Found: 12
+
+--- Do...While Loop (Skip 3 with continue) ---
+Remaining Number: 1
+Remaining Number: 2
+Remaining Number: 4
+Remaining Number: 5</code></pre>
+              </div>
+            </div>
+
+            <!-- Right: Actual Console Output -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a4">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a4">Click "Run All Loops" to execute loop demonstrations.</pre>
+                <div id="diff-container-a4"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 5 ==================== -->
+        <section class="view-section" id="view-assignment-5" aria-labelledby="heading-a5">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a5">Assignment 5: Functions & Scope</h1>
+              <p class="section-description">
+                Demonstrates standard functions with default parameters, arrow function syntax, function vs block scope, and controlled catching of a <code>ReferenceError</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Implementation & Actions -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Function & Scope Implementation</span>
+                </div>
+                <pre class="code-panel"><code>// Standard function with default parameters (5 x 4)
+function calculateStandardArea(length = 5, width = 4) {
+  return length * width;
+}
+
+// Arrow function calculator
+const calculateArrowArea = (length, width) => length * width;
+
+// Controlled block scope test
+try {
+  {
+    let blockVar = "scoped";
+  }
+  // Attempting access outside block throws ReferenceError
+  console.log(blockVar);
+} catch (err) {
+  console.log(`Scope Test Error: ${err.name}: ${err.message}`);
+}</code></pre>
+
+                <div style="margin-top: 18px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a5">Run Scope Example</button>
+                    <button class="btn btn-secondary" id="btn-compare-a5">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a5">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Output Reference</span>
+                </div>
+                <pre class="code-panel"><code>Standard Function Area (Default 5 x 4): 20
+Arrow Function Area (Custom 10 x 3): 30
+Scope Test Error: ReferenceError: blockVar is not defined</code></pre>
+              </div>
+            </div>
+
+            <!-- Right: Actual Console Output -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a5">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a5">Click "Run Scope Example" to execute function demonstrations.</pre>
+                <div id="diff-container-a5"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: ASSIGNMENT 6 ==================== -->
+        <section class="view-section" id="view-assignment-6" aria-labelledby="heading-a6">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-a6">Assignment 6: Arrays & Modern Array Methods</h1>
+              <p class="section-description">
+                Processes product objects using <code>forEach()</code> for iteration, <code>filter()</code> for items under $50, and <code>map()</code> to generate uppercase tags.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-cols-2">
+            <!-- Left: Implementation & Actions -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Array Operations Code</span>
+                </div>
+                <pre class="code-panel"><code>const products = [
+  { name: "Laptop", price: 800 },
+  { name: "Mouse", price: 25 },
+  { name: "Keyboard", price: 45 }
+];
+
+// 1. forEach() listing
+products.forEach(p => console.log(`Item: ${p.name} - Price: $${p.price}`));
+
+// 2. filter() items < $50
+const affordable = products.filter(p => p.price &lt; 50);
+
+// 3. map() formatted tags
+const tags = products.map(p => `${p.name.toUpperCase()} costs $${p.price}`);</code></pre>
+
+                <div style="margin-top: 18px;">
+                  <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-run-a6">Run Array Methods</button>
+                    <button class="btn btn-secondary" id="btn-compare-a6">Compare Output</button>
+                    <button class="btn btn-secondary" id="btn-reset-a6">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Expected Output Reference</span>
+                </div>
+                <pre class="code-panel"><code>--- All Products (forEach) ---
+Item: Laptop - Price: $800
+Item: Mouse - Price: $25
+Item: Keyboard - Price: $45
+
+--- Filtered Products (Price &lt; $50) ---
+Mouse: $25
+Keyboard: $45
+
+--- Mapped Product Tags (map) ---
+LAPTOP costs $800
+MOUSE costs $25
+KEYBOARD costs $45</code></pre>
+              </div>
+            </div>
+
+            <!-- Right: Actual Console Output -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Console Output Panel</span>
+                  <span class="status-badge idle" id="status-badge-a6">IDLE</span>
+                </div>
+                <pre class="console-output idle" id="console-a6">Click "Run Array Methods" to execute array operations.</pre>
+                <div id="diff-container-a6"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: CAPSTONE ==================== -->
+        <section class="view-section" id="view-capstone" aria-labelledby="heading-capstone">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-capstone">Capstone: Smart Product Inventory Analytics</h1>
+              <p class="section-description">
+                Interactive inventory management system featuring input validation, tiered categorization, array reduction metrics, real-time search/filter/sort, and financial estimates.
+              </p>
+            </div>
+            <div>
+              <button class="btn btn-primary" id="btn-run-capstone-demo">Run Section 11 Verification Demo (Monitor, $150)</button>
+            </div>
+          </div>
+
+          <!-- Capstone Analytics Stats Cards -->
+          <div class="grid-cols-4" style="margin-bottom: 20px;">
+            <div class="stat-card">
+              <div class="stat-label">TOTAL PRODUCTS</div>
+              <div class="stat-value" id="capstone-stat-count">2</div>
+              <div class="stat-sub">products.length</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">TOTAL INVENTORY VALUE</div>
+              <div class="stat-value" id="capstone-stat-total-value">$825</div>
+              <div class="stat-sub">reduce((sum, p) =&gt; sum + p.price)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">AVERAGE PRICE</div>
+              <div class="stat-value" id="capstone-stat-avg-value">$412.50</div>
+              <div class="stat-sub">total / count</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">PREMIUM ITEMS (&ge; $200)</div>
+              <div class="stat-value" id="capstone-stat-premium-count">1</div>
+              <div class="stat-sub">filter(p =&gt; p.price &ge; 200)</div>
+            </div>
+          </div>
+
+          <div class="grid-cols-3" style="margin-bottom: 20px;">
+            <div class="stat-card">
+              <div class="stat-label">AFFORDABLE ITEMS (&lt; $200)</div>
+              <div class="stat-value" style="font-size: 16px;" id="capstone-stat-affordable">["Mouse"]</div>
+              <div class="stat-sub">filter(p =&gt; p.price &lt; 200).map(p =&gt; p.name)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">HIGHEST PRICED PRODUCT</div>
+              <div class="stat-value" style="font-size: 16px;" id="capstone-stat-highest">Laptop ($800)</div>
+              <div class="stat-sub">Category: Premium</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">LOWEST PRICED PRODUCT</div>
+              <div class="stat-value" style="font-size: 16px;" id="capstone-stat-lowest">Mouse ($25)</div>
+              <div class="stat-sub">Category: Budget</div>
+            </div>
+          </div>
+
+          <!-- Add Product Form & Search Filter Bar -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Add New Product</span>
+            </div>
+            <div id="capstone-form-error" class="alert alert-error" style="display: none;"></div>
+            <div id="capstone-form-success" class="alert alert-success" style="display: none;"></div>
+
+            <form id="capstone-add-product-form">
+              <div class="form-inline">
+                <div class="form-group" style="flex: 2; margin-bottom: 0;">
+                  <label class="form-label" for="prod-name-input">Product Name</label>
+                  <input type="text" class="form-input" id="prod-name-input" placeholder="e.g. Mechanical Keyboard" required>
+                </div>
+                <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                  <label class="form-label" for="prod-price-input">Price ($)</label>
+                  <input type="number" step="0.01" class="form-input" id="prod-price-input" placeholder="e.g. 89.99" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <button type="submit" class="btn btn-primary" id="btn-add-product">Add Product</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Inventory Table Controls & Table -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Inventory Roster</span>
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm" id="btn-reset-inventory">Reset to Initial Data</button>
+                <button class="btn btn-outline-danger btn-sm" id="btn-clear-inventory">Clear All</button>
+              </div>
+            </div>
+
+            <!-- Query Toolbar -->
+            <div class="form-inline" style="margin-bottom: 16px;">
+              <div class="form-group" style="flex: 2; margin-bottom: 0;">
+                <label class="form-label" for="table-search-input">Search Products</label>
+                <input type="text" class="form-input" id="table-search-input" placeholder="Search by name...">
+              </div>
+              <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                <label class="form-label" for="table-category-filter">Category Filter</label>
+                <select class="form-select" id="table-category-filter">
+                  <option value="all">All Categories</option>
+                  <option value="budget">Budget (&lt; $50)</option>
+                  <option value="standard">Standard ($50–$199.99)</option>
+                  <option value="premium">Premium (&ge; $200)</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                <label class="form-label" for="table-sort-by">Sort By</label>
+                <select class="form-select" id="table-sort-by">
+                  <option value="none">Default Order</option>
+                  <option value="name-asc">Name (A–Z)</option>
+                  <option value="name-desc">Name (Z–A)</option>
+                  <option value="price-asc">Price (Low to High)</option>
+                  <option value="price-desc">Price (High to Low)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-wrapper">
+              <table class="data-table" id="inventory-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th class="text-right">Price</th>
+                    <th>Category</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-table-body">
+                  <!-- Rendered via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <div id="inventory-empty-msg" class="alert alert-info" style="margin-top: 14px; display: none;">
+              No products found matching the criteria. Add a product or reset the catalog.
+            </div>
+          </div>
+
+          <!-- Financial Projection Simulator -->
+          <div class="grid-cols-2">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Financial Estimate Simulator (Tax & Discount)</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">
+                Calculates adjusted financial projections without modifying stored inventory product prices or the base total.
+              </p>
+              <div id="financial-calc-error" class="alert alert-error" style="display: none;"></div>
+
+              <div class="form-inline" style="margin-bottom: 14px;">
+                <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                  <label class="form-label" for="fin-discount-input">Discount (%)</label>
+                  <input type="number" step="any" class="form-input" id="fin-discount-input" value="10" placeholder="0-100">
+                </div>
+                <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                  <label class="form-label" for="fin-tax-input">Tax Rate (%)</label>
+                  <input type="number" step="any" class="form-input" id="fin-tax-input" value="8" placeholder="0-100">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <button class="btn btn-secondary" id="btn-calc-estimate">Calculate Estimate</button>
+                </div>
+              </div>
+
+              <div id="financial-calc-results" class="code-panel" style="font-size: 11px;">
+Base Inventory Value: $825.00
+Discount (10%): -$82.50
+Subtotal after Discount: $742.50
+Estimated Tax (8%): +$59.40
+Projected Adjusted Total: $801.90
+              </div>
+            </div>
+
+            <!-- Console Log for Capstone -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Capstone Verification Console</span>
+                <span class="status-badge idle" id="status-badge-capstone">IDLE</span>
+              </div>
+              <pre class="console-output idle" id="console-capstone">Run the Section 11 Verification Demo or add/remove products to inspect console activity.</pre>
+              <div id="diff-container-capstone"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: TEST CENTER ==================== -->
+        <section class="view-section" id="view-test-center" aria-labelledby="heading-tests">
+          <div class="section-header">
+            <div class="section-heading-group">
+              <h1 id="heading-tests">Automated Test Center</h1>
+              <p class="section-description">
+                Interactive browser test runner executing live assertions across all assignments, inventory operations, and boundary conditions. No hardcoded results.
+              </p>
+            </div>
+            <div>
+              <button class="btn btn-primary" id="btn-run-browser-tests">Run Browser Test Suite</button>
+            </div>
+          </div>
+
+          <!-- Test Summary Metrics -->
+          <div class="grid-cols-4" style="margin-bottom: 20px;">
+            <div class="stat-card">
+              <div class="stat-label">TOTAL TESTS</div>
+              <div class="stat-value" id="test-stat-total">27</div>
+              <div class="stat-sub">Across 8 test suites</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">PASSED</div>
+              <div class="stat-value" style="color: var(--color-success);" id="test-stat-passed">0</div>
+              <div class="stat-sub" id="test-stat-pass-rate">Ready to execute</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">FAILED</div>
+              <div class="stat-value" style="color: var(--color-danger);" id="test-stat-failed">0</div>
+              <div class="stat-sub">0 errors detected</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">EXECUTION DURATION</div>
+              <div class="stat-value" id="test-stat-duration">0.0 ms</div>
+              <div class="stat-sub">Live performance timer</div>
+            </div>
+          </div>
+
+          <!-- CLI Node.js Test Banner -->
+          <div class="alert alert-info">
+            <strong>Terminal CLI Testing:</strong> You can also run <code>npm test</code> or <code>node --test tests/assignments.test.js</code> in the workspace terminal for full native Node.js test execution.
+          </div>
+
+          <!-- Live In-Browser Test Items List -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Live Test Results</span>
+              <span class="status-badge idle" id="test-runner-status">IDLE</span>
+            </div>
+            <div id="test-results-container">
+              <div class="alert alert-info">
+                Click <strong>"Run Browser Test Suite"</strong> above to execute all 27 automated tests in real time.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Reusable Confirmation Modal -->
+  <div class="modal-overlay" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modal-confirm-title">
+    <div class="modal-card">
+      <h2 class="modal-title" id="modal-confirm-title">Confirmation Required</h2>
+      <p class="modal-message" id="modal-confirm-message">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+        <button class="btn btn-danger" id="modal-confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/assignments.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/execution-engine.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
